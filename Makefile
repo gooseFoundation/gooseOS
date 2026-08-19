@@ -27,15 +27,15 @@ include $(ARCH_DIR)/arch.mk # Get the architecure config file, this is gonna be 
 
 # Include ALL the modules
 include init/init.mk
-include extern/flanterm/flanterm.mk
+include extern/flanterm.mk
 include mm/mm.mk
-include extern/tinyprintf/tinyprintf.mk
+include extern/tinyprintf.mk
 include drivers/drivers.mk
 
 # Get all the sources and objects
-KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TPRINTF_CSRCS)
+KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TINYPRINTF_CSRCS)
 KRNL_ALL_ASMS = $(ARCH_ASMS)
-KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TPRINTF_OBJS)
+KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TINYPRINTF_OBJS)
 
 all: $(KRNL_ELF)
 

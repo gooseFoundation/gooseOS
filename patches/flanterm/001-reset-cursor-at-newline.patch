@@ -1,0 +1,13 @@
+diff --git a/src/flanterm.c b/src/flanterm.c
+index 7053b69..8c68102 100644
+--- a/src/flanterm.c
++++ b/src/flanterm.c
+@@ -633,6 +633,8 @@ static bool execute_c0(struct flanterm_context *ctx, uint8_t c) {
+             } else if (y < ctx->rows - 1) {
+                 ctx->set_cursor_pos(ctx, x, y + 1);
+             }
++            ctx->get_cursor_pos(ctx, &x, &y);
++            ctx->set_cursor_pos(ctx, 0, y);
+             return true;
+         case '\r':
+             ctx->get_cursor_pos(ctx, &x, &y);
