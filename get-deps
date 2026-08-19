@@ -1,0 +1,32 @@
+# *
+# * ===========================================
+# * Copyright(c) 2026-present IgosProjects
+# * Copyright(c) 2026-present TheGooseFoundation and contributors
+# * 
+# * GooseOS is licensed under the GNU General Public License version 3(GPLv3), 
+# * the license text can be found inside of the LICENSE file at the root of the repositoy
+# *
+# * If you didnt receive the LICENSE file with this source code, 
+# * it can be found at https://www.gnu.org/licenses/gpl-3.0.html
+# * ==========================================
+# *
+
+#!/bin/sh
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+RUN_DIR="$(pwd)"
+
+# Update all the submodules
+git submodule update --init --recursive
+
+# Apply all the patches needed
+
+##############################################
+# FLANTERM PATCHES
+##############################################
+cd "$SCRIPT_DIR/extern/flanterm"
+git apply ../../patches/flanterm/001-reset-cursor-at-newline.patch
+
+cd $RUN_DIR
+
+echo "All dependencies have been downloaded, you can now run 'make' and 'make img'"
