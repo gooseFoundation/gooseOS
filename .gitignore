@@ -1,0 +1,6 @@
+*.elf
+*.log
+build
+OVMF_VARS.fd
+
+*.o
