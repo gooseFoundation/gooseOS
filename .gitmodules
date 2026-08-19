@@ -1,0 +1,8 @@
+[submodule "extern/flanterm"]
+	path = extern/flanterm
+	url = https://github.com/Mintsuki/Flanterm.git
+	branch = trunk
+[submodule "extern/tinyprintf"]
+	path = extern/tinyprintf
+	url = https://github.com/cjlano/tinyprintf.git
+	branch = master
