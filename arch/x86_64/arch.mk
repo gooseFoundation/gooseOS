@@ -27,6 +27,6 @@ KRNL_LDFLAGS := -T arch/x86_64/linker.ld -g
 KRNL_ASFLAGS := -c -g
 
 ARCH_ASMS := arch/x86_64/boot/boot.S arch/x86_64/boot/gdt.S arch/x86_64/cpu/hcf.S arch/x86_64/cpu/int.S
-ARCH_SRCS := arch/x86_64/boot/headers/limine.c arch/x86_64/boot/entry.c arch/x86_64/cpu/idt.c arch/x86_64/cpu/ints.c arch/x86_64/cpu/cpu.c arch/x86_64/mm/pmm.c
+ARCH_SRCS := arch/x86_64/boot/headers/limine.c arch/x86_64/boot/entry.c arch/x86_64/cpu/idt.c arch/x86_64/cpu/ints.c arch/x86_64/cpu/cpu.c arch/x86_64/mm/pmm.c arch/x86_64/mm/vmm.c
 
-ARCH_OBJS = arch/x86_64/boot/boot.o arch/x86_64/cpu/hcf.o arch/x86_64/boot/headers/limine.o arch/x86_64/boot/entry.o arch/x86_64/cpu/idt.o arch/x86_64/cpu/ints.o arch/x86_64/cpu/int.o arch/x86_64/cpu/cpu.o arch/x86_64/boot/gdt.o arch/x86_64/mm/pmm.o arch/x86_64/io/ports.o
+ARCH_OBJS = arch/x86_64/boot/boot.o arch/x86_64/cpu/hcf.o arch/x86_64/boot/headers/limine.o arch/x86_64/boot/entry.o arch/x86_64/cpu/idt.o arch/x86_64/cpu/ints.o arch/x86_64/cpu/int.o arch/x86_64/cpu/cpu.o arch/x86_64/boot/gdt.o arch/x86_64/mm/pmm.o arch/x86_64/io/ports.o arch/x86_64/mm/vmm.o

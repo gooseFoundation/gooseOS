@@ -16,6 +16,7 @@
 #include <drivers/kcon.h>
 #include <drivers/cpu.h>
 #include <mm/pmm.h>
+#include <mm/vmm.h>
 
 #include <extern/flanterm/flanterm.h>
 #include <extern/flanterm/fb.h>
@@ -30,12 +31,13 @@ void k_entry(struct BootInfo* boot_info) {
 
     // Now lets initlize all the other subsystems required for normal operation
     cpu_init();
-
-    k_InEarlyBoot = false;
+    vmm_init(boot_info->hhdm_offset);
     pmm_init(boot_info);
 
+    k_InEarlyBoot = false;
+
     // Print "Hello, World!"
-    kprintf("Hello, %s%c\n", "World", '!');
+    kprintf("%c%c%c%c%c%c %s%c\n", 'H', 'e', 'l', 'l', 'o', ',', "World", '!');
 
     for (;;) {
         asm volatile("hlt");
