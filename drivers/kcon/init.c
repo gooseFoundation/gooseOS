@@ -73,7 +73,7 @@ void kputc(const char c) {
 
 /// @internal This function is internally called and is not a part of the public API!
 /// @internal Its used for tinyprintf since it passes 2 arguments instead of one
-void _internal_kputc(void* ignored, const char c) {
+static void _kputc(void* ignored, const char c) {
     kputc(c);
 }
 
@@ -88,7 +88,7 @@ void kprintf(const char* str, ...) {
     va_list args;
     va_start(args, str);
 
-    tfp_format(NULL, _internal_kputc, str, args);
+    tfp_format(NULL, _kputc, str, args);
 
     va_end(args);
 }
@@ -97,5 +97,5 @@ void kprintf(const char* str, ...) {
 /// @param str: The formatted string to print
 /// @param args: Arguments to use 
 void kvsnprintf(const char* str, va_list args) {
-    tfp_format(NULL, _internal_kputc, str, args); // This is just simpler kprintf lol
+    tfp_format(NULL, _kputc, str, args); // This is just simpler kprintf lol
 }
