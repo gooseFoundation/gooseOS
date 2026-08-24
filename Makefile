@@ -31,11 +31,12 @@ include extern/flanterm.mk
 include mm/mm.mk
 include extern/tinyprintf.mk
 include drivers/drivers.mk
+include extern/tinyubsan.mk
 
 # Get all the sources and objects
-KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TINYPRINTF_CSRCS)
+KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TINYPRINTF_CSRCS) $(LUBSAN_SRCS)
 KRNL_ALL_ASMS = $(ARCH_ASMS)
-KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TINYPRINTF_OBJS)
+KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TINYPRINTF_OBJS) $(LUBSAN_OBJS)
 
 all: $(KRNL_ELF)
 
