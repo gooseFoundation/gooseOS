@@ -12,5 +12,5 @@
 # *
 
 # Declare the sources and objects
-MEM_CSRCS = mm/mem.c
-MEM_OBJS = mm/mem.o
+MEM_CSRCS = mm/mem.c mm/allocator.c
+MEM_OBJS = mm/mem.o mm/allocator.o

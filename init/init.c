@@ -16,6 +16,7 @@
 #include <drivers/kcon.h>
 #include <drivers/cpu.h>
 #include <mm/pmm.h>
+#include <mm/alloc.h>
 #include <mm/vmm.h>
 
 #include <extern/flanterm/flanterm.h>
@@ -33,11 +34,14 @@ void k_entry(struct BootInfo* boot_info) {
     cpu_init();
     vmm_init(boot_info->hhdm_offset);
     pmm_init(boot_info);
+    alloc_init();
 
     k_InEarlyBoot = false;
-
-    // Print "Hello, World!"
-    kprintf("%c%c%c%c%c%c %s%c\n", 'H', 'e', 'l', 'l', 'o', ',', "World", '!');
+    
+    // Run some tests
+    kprintf("test: Testing kmalloc\n");
+    kprintf("test: Allocated 1000 bytes of memory at 0x%x\n", kmalloc(1000));
+    kprintf("test: wow!\n");
 
     for (;;) {
         asm volatile("hlt");

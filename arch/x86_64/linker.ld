@@ -36,4 +36,6 @@ SECTIONS {
         *(.bss .bss.*)
         *(COMMON)
     }
+
+    k_end = .; /* End of kernel ELF file, used by allocator */
 }

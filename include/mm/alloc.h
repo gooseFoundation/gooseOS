@@ -13,9 +13,10 @@
 
 #pragma once
 
-/// @brief Should the OS use the limine boot protocol? Set to 0 if you dont want limine support, set to 1 for limine support
-#define CONF_USE_LIMINE 1
+/// @brief Initilizes the allocator and makes sure that its safe to provide "kmalloc" and "kfree"
+void alloc_init();
 
-/// @brief What is the size of the memory heap? (in KiB)
-/// @note Must be divisible by 4, reason: i decided so, 100% not a limitation
-#define CONF_MEM_HEAP_SIZE 64
+/// @brief Allocates some memory in the global heap
+/// @param amount: Amount of memory to allocate
+/// @return: Pointer to allocated segment
+uintptr_t kmalloc(size_t amount);
