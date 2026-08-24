@@ -72,7 +72,7 @@ void alloc_init() {
 
         heap_last_page = heap_new_page_virt;
         kprintf("malloc: Allocated new heap page at %x\n", heap_last_page);
-        kprintf("alloc: new heap page phys: 0x%x, new heap page virt: 0x%x\n");
+        kprintf("alloc: new heap page phys: 0x%x, new heap page virt: 0x%x\n", heap_new_page_phys, heap_new_page_virt);
     }
 
     alloc_heap_end = heap_last_page + (4 * 1024); // FIX: "heap_last_page" is the pointer to the START of the page, NOT THE END!

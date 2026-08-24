@@ -37,10 +37,10 @@ void k_entry(struct BootInfo* boot_info) {
     alloc_init();
 
     k_InEarlyBoot = false;
-    
+
     // Run some tests
     kprintf("test: Testing kmalloc\n");
-    kprintf("test: Allocated 1000 bytes of memory at 0x%x\n", kmalloc(1000));
+    kprintf("test: Allocated 1000 bytes of memory at 0x%x\ntest: Allocated 2000 bytes of memory at 0x%x\ntest: Allocated 4 KiB of memory at 0x%x", kmalloc(1000), kmalloc(2000), kmalloc(4096));
     kprintf("test: wow!\n");
 
     for (;;) {
