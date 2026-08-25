@@ -22,7 +22,7 @@ KRNL_LD := $(Ax86_64PREFIX)-ld
 KRNL_AS := $(Ax86_64PREFIX)-gcc
 
 # Flags for the compiler, linker and assembler
-KRNL_CFLAGS := -c -ffreestanding -nostdlib -I include -mcmodel=large -mno-red-zone -g -O0 -I arch/x86_64/include -fsanitize=null
+KRNL_CFLAGS := -c -ffreestanding -nostdlib -I include -mcmodel=large -mno-red-zone -g -O0 -I arch/x86_64/include -fsanitize=null -mgeneral-regs-only -mcmodel=kernel
 KRNL_LDFLAGS := -T arch/x86_64/linker.ld -g
 KRNL_ASFLAGS := -c -g
 
