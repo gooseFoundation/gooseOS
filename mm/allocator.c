@@ -46,7 +46,7 @@ void alloc_init() {
     const uintptr_t alloc_heap_start_phys = pmm_alloc_page();  // Allocate a new page that will be the start of our heap. We will use this later
     //ASSERT(!heap_start_page && heap_start_page == NULL); // Check if we recived the pointer
 
-    alloc_heap_start = _align_up((uintptr_t)k_end, 4096);
+    alloc_heap_start = _align_up((uintptr_t)k_end, 4096) + 0x100000;
 
     // Now we need to map it into the page tables
     // If not, we will fault!

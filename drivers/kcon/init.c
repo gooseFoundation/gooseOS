@@ -19,8 +19,10 @@
 #include <stdbool.h>
 #include <extern/tinyprintf/tinyprintf.h>
 #include <utils/boot/info.h>
+#include <utils/boot/limine.h>
 #include <drivers/kcon.h>
 #include <assert.h>
+#include <mm/alloc.h>
 
 #include <stdarg.h>
 
@@ -33,7 +35,7 @@ bool kcon_initilized = false;
 /// @attention Call only ONCE on boot!
 void kcon_init(struct GFramebuffer* fb) {
     // Check if we got a valid framebuffer sent in, this is important to prevent failures later on!
-    //ASSERT(!fb);
+    //ASSERT(fb == NULL);
 
     // Now we have CONFIRMED that the framebuffer exists, lets set the "global_fb"
     global_fb = fb;
