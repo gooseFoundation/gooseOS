@@ -7,4 +7,4 @@ Mirrors
 ----------------------------------------------------------
 
 Offical:
-    EvalynGomer's git server: https://git.evalyngoemer.com/IgosProjects1/gooseOS
+    EvalynGoemer's git server: https://git.evalyngoemer.com/IgosProjects1/gooseOS
