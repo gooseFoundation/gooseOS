@@ -40,8 +40,8 @@ static uintptr_t _align_down(uintptr_t value, uintptr_t alignment) {
 
 /// @brief Initilizes the allocator and makes sure that its safe to provide "kmalloc" and "kfree"
 void alloc_init() {
-    kprintf("alloc: k_end: 0x%x\n", (uintptr_t)k_end);
-    kprintf("alloc: heap start: 0x%x\n", alloc_heap_start);
+    //kprintf("alloc: k_end: 0x%x\n", (uintptr_t)k_end);
+    //kprintf("alloc: heap start: 0x%x\n", alloc_heap_start);
 
     const uintptr_t alloc_heap_start_phys = pmm_alloc_page();  // Allocate a new page that will be the start of our heap. We will use this later
     //ASSERT(!heap_start_page && heap_start_page == NULL); // Check if we recived the pointer
@@ -53,7 +53,7 @@ void alloc_init() {
     vmm_map_addr(alloc_heap_start_phys, _align_up((uintptr_t)k_end, 4096), GOS_PAGE_READ | GOS_PAGE_WRITE);
     alloc_heap_current_ptr = alloc_heap_start;
 
-    kprintf("alloc: Allocated heap start page at: 0x%x\n", alloc_heap_start);
+    //kprintf("alloc: Allocated heap start page at: 0x%x\n", alloc_heap_start);
 
     // We need to convert from KiB to bytes,
     // this is possible using simple math! Then we need to split it into 4 KiB pages
@@ -82,23 +82,32 @@ void alloc_init() {
 /// @param amount: Amount of memory to allocate
 /// @return: Pointer to allocated segment
 uintptr_t kmalloc(size_t amount) {
+     if (amount == 0) {kprintf("alloc: Attempt to allocate 0 bytes, please dont!\n"); return 0; }
+    if (alloc_heap_current_ptr > alloc_heap_end) k_bugcheck("alloc: alloc_heap_current_ptr is OUT OF BOUNDS!");
+
+    // FIX: Fix security issue featured in https://git.evalyngoemer.com/IgosProjects1/gooseOS/issues/1
+    const size_t remamingSpace = alloc_heap_end - alloc_heap_current_ptr;
+
     // If we are overflowing the heap, we need to grow the heap forward
-    if (alloc_heap_current_ptr + amount > alloc_heap_end) {
-        const uint32_t heap_needed_pages = (CONF_MEM_HEAP_SIZE * 1024) / 4096;
+    if (remamingSpace < amount) {
+        const size_t needed_bytes = amount - remamingSpace;
+        const size_t heap_needed_pages = (needed_bytes + 4095) / 4096;
         uintptr_t heap_last_page = alloc_heap_end;
 
         kprintf("alloc: Required pages for growing heap: %d\n", heap_needed_pages);
 
         // Allocate all the needed pages for growing the page
-        for (uint64_t PageIndex = 0; PageIndex < heap_needed_pages - 1; PageIndex++) {
+        for (uint64_t PageIndex = 0; PageIndex < heap_needed_pages; PageIndex++) {
             const uintptr_t heap_new_page_phys = pmm_alloc_page();
-            vmm_map_addr(heap_new_page_phys, heap_last_page + (4 * 1024), GOS_PAGE_READ | GOS_PAGE_WRITE);
+            vmm_map_addr(heap_new_page_phys, heap_last_page, GOS_PAGE_READ | GOS_PAGE_WRITE);
 
             uintptr_t heap_new_page_virt = heap_last_page + (4 * 1024);
 
             heap_last_page = heap_new_page_virt;
             kprintf("malloc: Allocated new heap page at %x\n", heap_last_page);
         }
+ 
+        alloc_heap_end = heap_last_page;
     }
 
     // Move forward the pointer and return the start
