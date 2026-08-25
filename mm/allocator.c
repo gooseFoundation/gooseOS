@@ -83,9 +83,9 @@ void alloc_init() {
 /// @return: Pointer to allocated segment
 uintptr_t kmalloc(size_t amount) {
     // If we are overflowing the heap, we need to grow the heap forward
-    if (!alloc_heap_current_ptr + amount > alloc_heap_end) {
+    if (alloc_heap_current_ptr + amount > alloc_heap_end) {
         const uint32_t heap_needed_pages = (CONF_MEM_HEAP_SIZE * 1024) / 4096;
-        uintptr_t heap_last_page = alloc_heap_start;
+        uintptr_t heap_last_page = alloc_heap_end;
 
         kprintf("alloc: Required pages for growing heap: %d\n", heap_needed_pages);
 
@@ -107,4 +107,10 @@ uintptr_t kmalloc(size_t amount) {
 
     // And now return it
     return (alloc_heap_current_ptr - amount);
+}
+
+/// @brief Frees the memory at the provided pointer
+/// @param ptr: Pointer to free 
+void kfree(uintptr_t ptr) {
+    kprintf("alloc: kfree is unsupported!\n");
 }

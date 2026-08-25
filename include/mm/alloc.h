@@ -20,3 +20,7 @@ void alloc_init();
 /// @param amount: Amount of memory to allocate
 /// @return: Pointer to allocated segment
 uintptr_t kmalloc(size_t amount);
+
+/// @brief Frees the memory at the provided pointer
+/// @param ptr: Pointer to free 
+void kfree(uintptr_t ptr);
