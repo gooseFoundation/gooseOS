@@ -6,3 +6,6 @@
 	path = extern/tinyprintf
 	url = https://github.com/cjlano/tinyprintf.git
 	branch = master
+[submodule "extern/uacpi"]
+	path = extern/uacpi
+	url = https://github.com/uACPI/uACPI.git

@@ -26,6 +26,7 @@ extern void k_entry(struct BootInfo* boot_info);
     extern struct limine_framebuffer_request framebuffer_request; // Framebuffer
     extern struct limine_memmap_request memmap_request; // MemMap
     extern struct limine_hhdm_request hhdm_request;
+    extern struct limine_rsdp_request rsdp_request;
 #endif
 
 /// @brief Switches to false after early boot is done, meaning that the console and other services exist
@@ -112,6 +113,7 @@ void _c_entry() {
 
     #if CONF_USE_LIMINE
         g_boot_info.hhdm_offset = hhdm_request.response->offset; // yes, all thats translated lol
+        g_boot_info.rsdp_addr = (uintptr_t)rsdp_request.response->address; // NOTICE: this piece of shit is so buggy, pls fix?
     #endif
 
     k_entry(&g_boot_info); // Now lets actually call the kernel entry

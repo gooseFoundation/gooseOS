@@ -11,9 +11,6 @@
 # * ==========================================
 # *
 
-include drivers/kcon/kcon.mk
-include drivers/kacpi/kacpi.mk
-
 # Declare the sources and objects
-DRIVER_CSRCS = $(KCON_CSRCS) $(KACPI_CSRCS)
-DRIVER_OBJS = $(KCON_OBJS) $(KACPI_OBJS)
+KACPI_CSRCS = drivers/kacpi/init.c
+KACPI_OBJS = drivers/kacpi/init.o

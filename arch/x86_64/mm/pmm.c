@@ -49,7 +49,7 @@ void pmm_init(struct BootInfo* g_BootInfo) {
 
     // Calculate the amount of pages and the size of the bitmap
     total_pages = maxAddr / 4096;
-    bitmap_size = total_pages / 8;
+    bitmap_size = (total_pages + 7) / 8;
 
     // Find a chunk of RAM that can hold our bitmap
     uint64_t bitmap_phys_addr = 0;
@@ -65,7 +65,7 @@ void pmm_init(struct BootInfo* g_BootInfo) {
 
     // Oh no! We didnt find a spot for our bitmap!
     // We wanna just throw a good ol bugcheck since we cant continue
-    //ASSERT(bitmap_phys_addr == 0);
+    ASSERT(bitmap_phys_addr != 0);
 
     bitmap = (uint8_t*)(bitmap_phys_addr + g_BootInfo->hhdm_offset);
     kprintf("pmm: bitmap is from now stored at: %lx\n", bitmap); // Print debug info

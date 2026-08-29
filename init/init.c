@@ -11,6 +11,7 @@
  * ==========================================
  */ 
 
+#include <drivers/kacpi.h>
 #include <stdint.h>
 #include <utils/boot/info.h>
 #include <drivers/kcon.h>
@@ -31,17 +32,23 @@ void k_entry(struct BootInfo* boot_info) {
     kcon_init(fb);
 
     // Now lets initlize all the other subsystems required for normal operation
-    cpu_init();
     vmm_init(boot_info->hhdm_offset);
     pmm_init(boot_info);
+    cpu_init();
     alloc_init();
+
+    acpi_init(boot_info->rsdp_addr, boot_info->hhdm_offset);
 
     k_InEarlyBoot = false;
 
     // Run some tests
     kprintf("test: Testing kmalloc\n");
-    kprintf("test: Allocated 1000 bytes of memory at 0x%x\ntest: Allocated 2000 bytes of memory at 0x%x\ntest: Allocated 4 KiB of memory at 0x%x", kmalloc(1000), kmalloc(2000), kmalloc(4096));
+    kprintf("test: Allocated 1000 bytes of memory at 0x%x\ntest: Allocated 2000 bytes of memory at 0x%x\ntest: Allocated 4 KiB of memory at 0x%x\n", kmalloc(1000), kmalloc(2000), kmalloc(4096));
     kprintf("test: wow!\n");
+
+    // Try to get the APIC table
+    kprintf("test: Attempting to get APIC table from ACPI\n");
+    kprintf("test: Recived: 0x%lx\n", acpi_get_table_by_sig("APIC")); // fancy :)
 
     for (;;) {
         asm volatile("hlt");

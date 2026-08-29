@@ -17,6 +17,6 @@
 #define ASSERT(expr) \
     do { \
         if (!(expr)) { \
-            k_bugcheck("Assertion failed: %s, file %s, line %d"); \
+            k_bugcheck("Assertion failed: %s, file %s, line %d", #expr, __FILE__, __LINE__); \
         } \
     } while(0)

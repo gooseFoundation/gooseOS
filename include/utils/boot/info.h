@@ -70,4 +70,7 @@ struct BootInfo {
 
     // HHDM address(where memory is mapped in the page table)
     uint64_t hhdm_offset; // by defualt NULL, if translator doesnt fill in, the stuff will break!
+
+    // RSDP address(ACPI root table)
+    uintptr_t rsdp_addr;
 };

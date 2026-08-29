@@ -33,6 +33,6 @@ struct interrupt_frame {
 /// @internal This function is called only internally and used by the early ISR entries
 /// @param int_frame 
 void _isr_handler(struct interrupt_frame* int_frame) {
-    kprintf("RIP: %x\n", int_frame->rip);
+    kprintf("RIP: %lx\n", int_frame->rip);
     k_bugcheck("A CPU exception has occured at !");
 }
