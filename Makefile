@@ -34,20 +34,23 @@ include drivers/drivers.mk
 include extern/tinyubsan.mk
 
 # Get all the sources and objects
-KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TINYPRINTF_CSRCS) $(LUBSAN_SRCS)
+KRNL_ALL_CSRCS = $(INIT_CSRCS) $(ARCH_SRCS) $(FLANTERM_CSRCS) $(MEM_CSRCS) $(DRIVER_CSRCS) $(TINYPRINTF_CSRCS) $(LUBSAN_SRCS) $(LUACPI_SRCS)
 KRNL_ALL_ASMS = $(ARCH_ASMS)
-KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TINYPRINTF_OBJS) $(LUBSAN_OBJS)
+KRNL_ALL_OBJS = $(INIT_OBJS) $(ARCH_OBJS) $(FLANTERM_OBJS) $(MEM_OBJS) $(DRIVER_OBJS) $(TINYPRINTF_OBJS) $(LUBSAN_OBJS) $(LUACPI_OBJS)
 
 all: $(KRNL_ELF)
 
 %.o: %.c
-	$(KRNL_CC) $(KRNL_CFLAGS) $< -o $@
+	@echo "CC		$<"
+	@$(KRNL_CC) $(KRNL_CFLAGS) $< -o $@
 
 %.o: %.S
-	$(KRNL_AS) $(KRNL_ASFLAGS) $< -o $@
+	@echo "AS		$<"
+	@$(KRNL_AS) $(KRNL_ASFLAGS) $< -o $@
 
 $(KRNL_ELF): $(KRNL_ALL_OBJS)
-	$(KRNL_LD) $(KRNL_ALL_OBJS) $(KRNL_LDFLAGS) -o $@
+	@echo "LD		$@"
+	@$(KRNL_LD) $(KRNL_ALL_OBJS) $(KRNL_LDFLAGS) -o $@
 
 img: $(KRNL_ELF) build_img
 clean:
