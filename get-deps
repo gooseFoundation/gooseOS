@@ -19,14 +19,6 @@ RUN_DIR="$(pwd)"
 # Update all the submodules
 git submodule update --init --recursive
 
-# Apply all the patches needed
-
-##############################################
-# FLANTERM PATCHES
-##############################################
-cd "$SCRIPT_DIR/extern/flanterm"
-git apply ../../patches/flanterm/001-reset-cursor-at-newline.patch
-
 cd $RUN_DIR
 
 echo "All dependencies have been downloaded, you can now run 'make' and 'make img'"

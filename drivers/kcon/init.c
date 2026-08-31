@@ -31,6 +31,15 @@ struct flanterm_context* global_ctx;
 
 bool kcon_initilized = false;
 
+/// @brief Converts an RGB color into a single 00RRGGBB value, for use with flanterm 
+/// @param r: Red
+/// @param g: Green 
+/// @param b: Blue
+/// @return 00RRGGBB color
+uint32_t _kcon_convert_into_00RRGGBB_for_flanterm(uint8_t r, uint8_t g, uint8_t b) {
+    return (r << 16) | (g << 8) | b;
+}
+
 /// @brief Initilizes the console driver allowing for characters to be printed to the display
 /// @attention Call only ONCE on boot!
 void kcon_init(struct GFramebuffer* fb) {
@@ -39,6 +48,8 @@ void kcon_init(struct GFramebuffer* fb) {
 
     // Now we have CONFIRMED that the framebuffer exists, lets set the "global_fb"
     global_fb = fb;
+
+    uint32_t bg_color = _kcon_convert_into_00RRGGBB_for_flanterm(8, 20, 46);
 
     // Now we need to initilize Flanterm, Flanterm is our console emulator we use it to print characters to the display
     global_ctx = flanterm_fb_init(
@@ -50,7 +61,7 @@ void kcon_init(struct GFramebuffer* fb) {
         fb->blue_mask_size, fb->blue_mask_shift,
         NULL,
         NULL, NULL,
-        NULL, NULL,
+        &bg_color, NULL,
         NULL, NULL,
         NULL, 0, 0, 1,
         0, 0,
@@ -71,6 +82,11 @@ void kputc(const char c) {
 
     uart_putc(c);
     flanterm_write(global_ctx, &c, 1); // Tell Flanterm to draw our character to the display
+
+    // FIX: Avoid patching Flanterm and properly handle CRLF
+    if (c == '\n') {
+        kputc('\r');
+    }
 }
 
 /// @internal This function is internally called and is not a part of the public API!
